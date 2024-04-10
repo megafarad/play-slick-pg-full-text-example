@@ -1,4 +1,4 @@
-name := """play-slick-pg-fulltext-example"""
+name := """play-slick-pg-full-text-example"""
 organization := "com.megafarad"
 
 version := "1.0-SNAPSHOT"
@@ -12,7 +12,7 @@ libraryDependencies ++= Seq(
   "com.github.tminglei" %% "slick-pg" % "0.22.1",
   "org.playframework" %% "play-slick" % "6.1.0",
   "org.playframework" %% "play-slick-evolutions" % "6.1.0",
-  "org.postgresql" % "postgresql" % "42.7.2",
+  "org.postgresql" % "postgresql" % "42.7.3",
   guice,
   "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
 )
