@@ -1,0 +1,7 @@
+@import forms.SearchDocumentForm
+
+@(searchForm: Form[SearchDocumentForm.Data])(implicit requestHeader: MessagesRequestHeader)
+
+@main("Search Page") {
+    @searchBar(searchForm, None)
+}

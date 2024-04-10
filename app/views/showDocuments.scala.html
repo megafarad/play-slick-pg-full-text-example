@@ -1,0 +1,54 @@
+@import models._
+
+@(documentsPage: Page[Document])
+
+@main("Welcome to Nomi Nomi No Mi!") {
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Abbreviated contents</th>
+                <th>Link to Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(document <- documentsPage.items) {
+                <tr>
+                    <td>@document.id.get</td>
+                    <td>@document.abbreviatedContent</td>
+                    <td><a href=@routes.DocumentsController.editDocument(document.id.get)>Edit</a></td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>
+                    Page: @(documentsPage.page + 1)
+                </td>
+                <td>
+                    of: @documentsPage.totalPageCount
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="@routes.DocumentsController.createDocument">Create New Document</a>
+                </td>
+
+                @if(documentsPage.page + 1 < documentsPage.totalPageCount) {
+                    <td>
+                        <a href="@routes.DocumentsController.documents(page = documentsPage.page + 1)"
+                        class="btn btn-primary">Next Page</a>
+                    </td>
+                }
+
+                @if(documentsPage.page > 0) {
+                    <td>
+                        <a href="@routes.DocumentsController.documents(page = documentsPage.page - 1)"
+                        class="btn btn-primary">Previous Page</a>
+                    </td>
+                }
+
+            </tr>
+        </tfoot>
+    </table>
+}

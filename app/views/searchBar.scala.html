@@ -1,0 +1,34 @@
+@import helper._
+@import models._
+@import play.api.mvc.MessagesRequestHeader
+
+@import forms.SearchDocumentForm
+
+@(searchForm: Form[SearchDocumentForm.Data], searchResultPage: Option[Page[SearchResult]])(implicit request: MessagesRequestHeader)
+
+@form(routes.DocumentsController.searchDocuments) {
+    @CSRF.formField
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Search:</td>
+                <td>@inputText(searchForm("query"))</td>
+                <td><button type="submit" class="btn btn-primary">Search</button> </td>
+            </tr>
+            @if(searchResultPage.isDefined) {
+                <tr>
+                    @if(searchResultPage.get.page + 1 < searchResultPage.get.totalPageCount) {
+                        <td>
+                            <button class="btn btn-primary" name="page" value=@(searchResultPage.get.page + 1)>Next Page</button>
+                        </td>
+                    }
+                    @if(searchResultPage.get.page > 0) {
+                        <td>
+                            <button class="btn btn-primary" name="page" value=@(searchResultPage.get.page - 1)>Previous Page</button>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}

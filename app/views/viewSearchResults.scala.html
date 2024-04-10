@@ -1,0 +1,38 @@
+@import models._
+
+@import forms.SearchDocumentForm
+@(searchForm: Form[SearchDocumentForm.Data], searchResultPage: Page[SearchResult])(implicit request: MessagesRequestHeader)
+
+@main("Search Results") {
+
+    @searchBar(searchForm, Some(searchResultPage))
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Highlights</th>
+                <th>Rank</th>
+                <th>Link to Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(searchResult <- searchResultPage.items) {
+                <tr>
+                    <td>@searchResult.document.id.get</td>
+                    <td>@Html(searchResult.highlights)</td>
+                    <td>@searchResult.rank</td>
+                    <td><a href=@routes.DocumentsController.editDocument(searchResult.document.id.get)>Edit</a> </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                Page: @(searchResultPage.page + 1)
+            </tr>
+            <tr>
+                of: @searchResultPage.totalPageCount
+            </tr>
+        </tfoot>
+    </table>
+}

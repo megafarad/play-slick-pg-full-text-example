@@ -1,0 +1,13 @@
+@import models.Document
+@import helper._
+
+@(document: Document)(implicit requestHeader: RequestHeader)
+
+@main("Edit Document") {
+    @form(CSRF(routes.DocumentsController.saveExistingDocument(document.id.get))) {
+        <label for="content">Document Content:</label>
+        <textarea id="content" name="content" rows="10" cols="30">@document.content</textarea>
+        <button type="submit">Save</button>
+        <a href="@routes.DocumentsController.documents()">Back to list</a>
+    }
+}
