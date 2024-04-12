@@ -36,11 +36,10 @@ class DocumentDAOImpl @Inject() (val dbConfigProvider: DatabaseConfigProvider)(i
   def search(query: String, page: Int, pageSize: Int): Future[Page[SearchResult]] = {
     val offset = page * pageSize
     val totalQuery = documentTableQuery.filter(table => table.searchField @@ webSearchToTsQuery(query))
-      .map(t => (t.id, t.content, tsHeadline(t.content, webSearchToTsQuery(query)),
-        tsRankCD(t.searchField, webSearchToTsQuery(query))))
-      .sortBy(_._4.desc)
+    val searchResultsQuery = totalQuery.map(t => (t.id, t.content, tsHeadline(t.content, webSearchToTsQuery(query)),
+        tsRankCD(t.searchField, webSearchToTsQuery(query)))).sortBy(_._4.desc)
 
-    val paginatedQuery = totalQuery.drop(offset).take(pageSize)
+    val paginatedQuery = searchResultsQuery.drop(offset).take(pageSize)
 
     for {
       searchResults <- db.run(paginatedQuery.result) map {
