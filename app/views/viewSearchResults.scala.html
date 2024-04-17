@@ -19,10 +19,10 @@
         <tbody>
             @for(searchResult <- searchResultPage.items) {
                 <tr>
-                    <td>@searchResult.document.id.get</td>
+                    <td>@searchResult.documentId</td>
                     <td>@Html(searchResult.highlights)</td>
                     <td>@searchResult.rank</td>
-                    <td><a href=@routes.DocumentsController.editDocument(searchResult.document.id.get)>Edit</a> </td>
+                    <td><a href=@routes.DocumentsController.editDocument(searchResult.documentId)>Edit</a> </td>
                 </tr>
             }
         </tbody>
